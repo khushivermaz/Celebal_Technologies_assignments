@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Delicious Dessert Card</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to right, #ffe0e0, #fff5f0);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .dessert-card {
+      background-color: #ffffff;
+      border: 2px solid #ff8a65;
+      padding: 30px;
+      margin: 20px;
+      border-radius: 16px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      width: 320px;
+      text-align: center;
+      transition: all 0.3s ease-in-out;
+    }
+
+    .dessert-card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+      background-color: #fff0e6;
+    }
+
+    .emoji {
+      font-size: 64px;
+      margin-bottom: 20px;
+    }
+
+    h2 {
+      color: #d84315;
+      margin-bottom: 10px;
+    }
+
+    p {
+      color: #555;
+      line-height: 1.6;
+    }
+
+    .info {
+      margin-top: 15px;
+      text-align: left;
+      font-size: 14px;
+    }
+
+    .info strong {
+      color: #e65100;
+    }
+
+    .button {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #ff7043;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      text-decoration: none;
+    }
+
+    .button:hover {
+      background-color: #f4511e;
+    }
+  </style>
+</head>
+<body>
+  <div class="dessert-card">
+    <div class="emoji">🍫🎂</div>
+    <h2>Chocolate Cake</h2>
+    <p>A rich, moist dessert layered with creamy chocolate frosting and topped with joy!</p>
+    <div class="info">
+      <p><strong>Type:</strong> Dessert</p>
+      <p><strong>Flavour:</strong> Chocolate</p>
+      <p><strong>Serving:</strong> Best served chilled with vanilla ice cream 🍨</p>
+    </div>
+    <a href="#" class="button">Order Now</a>
+  </div>
+</body>
+</html>
