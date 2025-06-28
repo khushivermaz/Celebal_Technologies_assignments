@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Beautiful Responsive Dashboard</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <header>
+    <div class="logo">🌈 My Dashboard</div>
+    <nav class="nav" id="nav">
+      <ul class="nav-links">
+        <li><a href="#">Courses</a></li>
+        <li><a href="#">Projects</a></li>
+        <li><a href="#">Achievements</a></li>
+        <li><a href="#">Support</a></li>
+      </ul>
+      <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+    </nav>
+  </header>
+
+  <div class="container">
+    <aside class="sidebar">
+      <h2>📚 Sidebar</h2>
+      <ul>
+        <li>Dashboard</li>
+        <li>Courses Enrolled</li>
+        <li>Projects</li>
+        <li>Achievements</li>
+        <li>Help & Support</li>
+      </ul>
+    </aside>
+
+    <main class="main-content">
+      <h1>✨ Welcome to Your  Learning Dashboard</h1>
+      <p>This is your personalized dashboard with courses, projects, and achievements. Enjoy learning in style!</p>
+      <button class="cta-btn">Start Exploring</button>
+    </main>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 🌟 My Learning Platform. All rights reserved.</p>
+  </footer>
+
+  <script>
+    function toggleMenu() {
+      const navLinks = document.querySelector('.nav-links');
+      navLinks.classList.toggle('active');
+    }
+  </script>
+</body>
+</html>
