@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>JavaScript Assignment</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background: #f8f9fa; }
+    h2 { color: #333366; }
+    pre { background: #f0f0f0; padding: 10px; border-radius: 5px; }
+  </style>
+</head>
+<body>
+
+  <h1>JavaScript Assignment</h1>
+
+  <h2>1. Join Array Elements</h2>
+  <pre id="joinOutput"></pre>
+
+  <h2>2. Most Frequent Element</h2>
+  <pre id="freqOutput"></pre>
+
+  <h2>3. Truncate String</h2>
+  <pre id="truncateOutput"></pre>
+
+  <h2>4. Capitalize Each Word</h2>
+  <pre id="capitalizeOutput"></pre>
+
+  <h2>5. Filter Values Between Two Numbers</h2>
+  <pre id="betweenOutput"></pre>
+
+  <h2>6. Find Index of Element</h2>
+  <pre id="indexOutput"></pre>
+
+  <script>
+    // 1. Join Array Elements
+    let myColor = ["Red", "Green", "White", "Black"];
+    let joinResult = myColor.join() + "\n" + myColor.join(',') + "\n" + myColor.join('+');
+    document.getElementById('joinOutput').innerText = joinResult;
+
+    // 2. Most Frequent Element
+    let arr1 = [3, 'a', 'a', 'a', 2, 3, 'a', 3, 'a', 2, 4, 9, 3];
+    function mostFrequent(arr) {
+      let freq = {};
+      let maxCount = 0;
+      let maxItem = null;
+      for (let item of arr) {
+        freq[item] = (freq[item] || 0) + 1;
+        if (freq[item] > maxCount) {
+          maxCount = freq[item];
+          maxItem = item;
+        }
+      }
+      return `${maxItem} ( ${maxCount} times )`;
+    }
+    document.getElementById('freqOutput').innerText = mostFrequent(arr1);
+
+    // 3. Truncate String
+    function truncateString(str, num) {
+      return str.slice(0, num);
+    }
+    document.getElementById('truncateOutput').innerText = truncateString("Robin Singh", 4); // "Robi"
+
+    // 4. Capitalize Words
+    function capitalizeWords(str) {
+      return str.split(' ')
+                .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+                .join(' ');
+    }
+    document.getElementById('capitalizeOutput').innerText = capitalizeWords('js string exercises');
+
+    // 5. Filter Between Two Numbers
+    function arrBetween(a, b, arr) {
+      return arr.filter(num => num > a && num < b);
+    }
+    let betweenText = '';
+    betweenText += 'arrBetween(3, 8, [1, 5, 95, 0, 4, 7]) ➞ ' + JSON.stringify(arrBetween(3, 8, [1, 5, 95, 0, 4, 7])) + "\n";
+    betweenText += 'arrBetween(1, 10, [1, 10, 25, 8, 11, 6]) ➞ ' + JSON.stringify(arrBetween(1, 10, [1, 10, 25, 8, 11, 6])) + "\n";
+    betweenText += 'arrBetween(7, 32, [1, 2, 3, 78]) ➞ ' + JSON.stringify(arrBetween(7, 32, [1, 2, 3, 78]));
+    document.getElementById('betweenOutput').innerText = betweenText;
+
+    // 6. Find Index
+    function findIndex(arr, val) {
+      return arr.indexOf(val);
+    }
+    let indexText = '';
+    indexText += '["hi", "edabit", "fgh", "abc"] → "fgh" ➞ ' + findIndex(["hi", "edabit", "fgh", "abc"], "fgh") + "\n";
+    indexText += '["Red", "blue", "Blue", "Green"] → "blue" ➞ ' + findIndex(["Red", "blue", "Blue", "Green"], "blue") + "\n";
+    indexText += '["a", "g", "y", "d"] → "d" ➞ ' + findIndex(["a", "g", "y", "d"], "d") + "\n";
+    indexText += '["Pineapple", "Orange", "Grape", "Apple"] → "Pineapple" ➞ ' + findIndex(["Pineapple", "Orange", "Grape", "Apple"], "Pineapple");
+    document.getElementById('indexOutput').innerText = indexText;
+  </script>
+
+</body>
+</html>
