@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Beautiful Stepper Form</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap');
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      color: #333;
+    }
+
+    .stepper-form {
+      background: white;
+      border-radius: 12px;
+      max-width: 420px;
+      width: 100%;
+      padding: 30px 40px 40px 40px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+      position: relative;
+    }
+
+    .stepper-form h3 {
+      font-weight: 600;
+      margin-bottom: 20px;
+      color: #2575fc;
+    }
+
+    .step {
+      display: none;
+      animation: fadeIn 0.5s ease forwards;
+    }
+    .step.active {
+      display: block;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"] {
+      width: 100%;
+      padding: 12px 15px;
+      margin: 8px 0 20px 0;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      font-size: 16px;
+      transition: border-color 0.3s ease;
+    }
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    input[type="tel"]:focus {
+      border-color: #2575fc;
+      outline: none;
+    }
+
+    .buttons {
+      text-align: right;
+      margin-top: 15px;
+    }
+    button {
+      background: #2575fc;
+      border: none;
+      color: white;
+      padding: 12px 22px;
+      margin-left: 10px;
+      border-radius: 30px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 6px 12px rgba(37, 117, 252, 0.4);
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    button:hover:not(:disabled) {
+      background: #1b54c8;
+      box-shadow: 0 8px 15px rgba(27, 84, 200, 0.6);
+    }
+    button:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+
+    /* Step indicators */
+    .step-indicators {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 30px;
+      gap: 18px;
+    }
+    .step-indicator {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: #ddd;
+      box-shadow: inset 0 0 5px #bbb;
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
+    }
+    .step-indicator.active {
+      background: #2575fc;
+      box-shadow: 0 0 10px #2575fc;
+    }
+    .step-indicator.completed {
+      background: #4caf50;
+      box-shadow: 0 0 12px #4caf50;
+    }
+
+    /* Fade in animation */
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translateY(15px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+
+    /* Summary box */
+    #summary {
+      background: #f5f8ff;
+      padding: 18px 20px;
+      border-radius: 10px;
+      border: 1.5px solid #2575fc;
+      font-size: 16px;
+      color: #111;
+      line-height: 1.4;
+    }
+  </style>
+</head>
+<body>
+  <div class="stepper-form" role="form" aria-label="Multi-step form">
+    <div class="step-indicators" aria-live="polite">
+      <span class="step-indicator active" aria-current="step" aria-label="Step 1"></span>
+      <span class="step-indicator" aria-label="Step 2"></span>
+      <span class="step-indicator" aria-label="Step 3"></span>
+    </div>
+
+    <form id="myForm" novalidate>
+
+      <div class="step active" aria-hidden="false">
+        <h3>Step 1: Personal Info</h3>
+        <label for="fname">First Name</label>
+        <input type="text" id="fname" name="fname" required autocomplete="given-name" />
+        <label for="lname">Last Name</label>
+        <input type="text" id="lname" name="lname" required autocomplete="family-name" />
+      </div>
+
+      <div class="step" aria-hidden="true">
+        <h3>Step 2: Contact Info</h3>
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required autocomplete="email" />
+        <label for="phone">Phone Number</label>
+        <input type="tel" id="phone" name="phone" autocomplete="tel" />
+      </div>
+
+      <div class="step" aria-hidden="true">
+        <h3>Step 3: Confirm</h3>
+        <p>Please review your information before submitting.</p>
+        <div id="summary" aria-live="polite"></div>
+      </div>
+
+      <div class="buttons">
+        <button type="button" id="prevBtn" disabled>Previous</button>
+        <button type="button" id="nextBtn">Next</button>
+      </div>
+
+    </form>
+  </div>
+
+  <script>
+    const steps = document.querySelectorAll('.step');
+    const indicators = document.querySelectorAll('.step-indicator');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const form = document.getElementById('myForm');
+    const summaryDiv = document.getElementById('summary');
+
+    let currentStep = 0;
+
+    function showStep(step) {
+      steps.forEach((s, i) => {
+        s.classList.toggle('active', i === step);
+        s.setAttribute('aria-hidden', i === step ? 'false' : 'true');
+      });
+      indicators.forEach((ind, i) => {
+        ind.classList.remove('active', 'completed');
+        if(i < step) ind.classList.add('completed');
+        else if(i === step) ind.classList.add('active');
+      });
+      prevBtn.disabled = step === 0;
+      nextBtn.textContent = step === steps.length - 1 ? 'Submit' : 'Next';
+
+      if(step === steps.length -1) {
+        fillSummary();
+      }
+    }
+
+    function fillSummary() {
+      const fname = form.fname.value.trim();
+      const lname = form.lname.value.trim();
+      const email = form.email.value.trim();
+      const phone = form.phone.value.trim();
+      summaryDiv.innerHTML = `
+        <strong>First Name:</strong> ${fname || '(Not provided)'}<br />
+        <strong>Last Name:</strong> ${lname || '(Not provided)'}<br />
+        <strong>Email:</strong> ${email || '(Not provided)'}<br />
+        <strong>Phone:</strong> ${phone || '(Not provided)'}
+      `;
+    }
+
+    function validateStep(step) {
+      const inputs = steps[step].querySelectorAll('input');
+      for(let input of inputs) {
+        if(!input.checkValidity()) {
+          input.reportValidity();
+          return false;
+        }
+      }
+      return true;
+    }
+
+    prevBtn.addEventListener('click', () => {
+      if(currentStep > 0) {
+        currentStep--;
+        showStep(currentStep);
+      }
+    });
+
+    nextBtn.addEventListener('click', () => {
+      if(currentStep === steps.length -1) {
+        if(form.checkValidity()) {
+          alert('Form submitted successfully!');
+          form.reset();
+          currentStep = 0;
+          showStep(currentStep);
+        } else {
+          form.reportValidity();
+        }
+        return;
+      }
+
+      if(validateStep(currentStep)) {
+        currentStep++;
+        showStep(currentStep);
+      }
+    });
+
+    // Initialize
+    showStep(currentStep);
+  </script>
+</body>
+</html>
